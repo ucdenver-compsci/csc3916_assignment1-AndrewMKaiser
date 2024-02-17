@@ -1,14 +1,28 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+var server = require("http").createServer();
 
-app.use(express.json)
-app.use(express.urlencoded({extended:true}))
+server.on("request", (request, response) => {
+    var body = [];
+    request.on("data", chunk => {
+        body.push(chunk);
+    });
+    request
+        .on("end", () => {
+            let bodyString = body.concat().toString();
+            console.log(bodyString);
+            response.end(bodyString);
+        })
+        .on("error", () => {
+            response.statusCode = 400;
+            response.end();
+        });
+    response.on("error", err => {
+        console.error(err);
+    });
+});
+server.listen(process.env.PORT || 8008, () => {
+    console.log("Server listening at 8008");
+});
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`) // Callback
-})
+module.exports = server; // for testing
 
-app.post("/", (req, res) => {
-    res.send(req.body)
-})
+//curl -d "echo" -H "Content-Type: text" -X POST http://localhost:8008
