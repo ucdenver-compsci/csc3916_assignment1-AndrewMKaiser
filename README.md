@@ -6,4 +6,4 @@
 
     When running the collection through the Postman desktop application, the response time was reliably under 100ms. However, when using the web version, it was reliably above 250ms.
 
-    Keep in mind Render may spin down the server due to using the free tier, which may cause responsed to be longer.
+    Keep in mind Render may spin down the server due to using the free tier, which may cause response times to be longer.
